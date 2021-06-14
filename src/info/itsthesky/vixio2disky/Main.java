@@ -16,12 +16,18 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 public class Main extends Application {
+
+    public final static Image disky = new Image(getFromURL("https://zupimages.net/up/21/24/3lot.png"));
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Vixio2DiSky");
-        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("resources/icon.png")));
+        primaryStage.getIcons().add(disky);
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -56,13 +62,14 @@ public class Main extends Application {
                 "-fx-background-radius: 0 0 0 0;");
         convert.setOnAction(e -> {
             try {
-                String txt = convert(vixioArea.getText());
+                String txt = Converter.convert(vixioArea.getText());
                 validationText.setFill(Color.DARKGREEN);
                 validationText.setText("The code has been converted!");
                 diskyArea.setText(txt);
             } catch (Exception ex) {
                 validationText.setFill(Color.DARKRED);
                 validationText.setText("An error occurred with the code conversion: " + ex.getMessage());
+                ex.printStackTrace();
             }
         });
         convertLine.setSpacing(5);
@@ -74,13 +81,16 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public String convert(final String current) throws Exception {
-        if (current.isEmpty() || current.split("").length == 0)
-            throw new IllegalArgumentException("Convert code cannot be empty!");
-        return current;
-    }
-
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static InputStream getFromURL(String url) {
+        try {
+            return new URL(url).openStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

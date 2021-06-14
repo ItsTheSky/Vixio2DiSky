@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group 'info.itsthesky'
+version '1.0'
+def version = '1.0';
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+}
+dependencies {
+    compile 'junit:junit:4.12'
+    implementation 'org.openjfx:javafx:14'
+    compile 'org.openjfx:javafx-base:14'
+    compile 'org.openjfx:javafx-graphics:14'
+    compile 'org.openjfx:javafx-controls:14'
+    compile 'org.openjfx:javafx-fxml:14'
+    compile 'org.openjfx:javafx-swing:14'
+    compile 'org.openjfx:javafx-media:14'
+    compile 'org.openjfx:javafx-web:14'
+    implementation 'org.jetbrains:annotations:20.1.0'
+}
+
+jar {
+    archiveName 'Vixio2DiSky ' + version + ".jar"
+    manifest {
+        attributes(
+                'Main-Class': 'info.itsthesky.vixio2disky.Main'
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+compileJava.options.encoding = 'UTF-8'
