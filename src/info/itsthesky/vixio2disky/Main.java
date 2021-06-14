@@ -8,9 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -35,17 +39,24 @@ public class Main extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 720, 300);
+        Scene scene = new Scene(grid, 720, 720);
         primaryStage.setScene(scene);
 
+        VBox main = new VBox();
         HBox title = new HBox();
         title.setAlignment(Pos.CENTER);
+        main.setAlignment(Pos.TOP_CENTER);
+        main.setSpacing(10);
 
         Text maintitle = new Text("Vixio2DiSky");
         maintitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 
+        Circle cir2 = new Circle(170,170,50);
+        cir2.setFill(new ImagePattern(disky));
         title.getChildren().add(maintitle);
-        grid.add(title, 1, 0, 1, 1);
+        main.getChildren().add(cir2);
+        main.getChildren().add(title);
+        grid.add(main, 1, 0, 1, 1);
 
         grid.add(new Label("Vixio Code: (Input)"), 0, 1);
         TextArea vixioArea = new TextArea();
